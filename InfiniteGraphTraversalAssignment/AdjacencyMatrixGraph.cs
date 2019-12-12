@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 
 namespace InfiniteGraphTraversalAssignment
 {
     class AdjacencyMatrixGraph : Graph
     {
         private bool[][] adjacencyMatrix = null;
-        public override int NodeCount { get; protected set; }
+        public override BigInteger NodeCount { get; protected set; }
 
         public AdjacencyMatrixGraph(int nodeCount)
         {
@@ -20,7 +21,7 @@ namespace InfiniteGraphTraversalAssignment
             NodeCount = nodeCount;
         }
 
-        private bool IsInBounds(int index)
+        private bool IsInBounds(BigInteger index)
         {
             if (index < 0 || index >= NodeCount) return false;
             return true;
@@ -33,15 +34,15 @@ namespace InfiniteGraphTraversalAssignment
             Version++;
         }
 
-        public override bool HasEdgeBetween(int node1, int node2)
+        public override bool HasEdgeBetween(BigInteger node1, BigInteger node2)
         {
             if (!(IsInBounds(node1) && IsInBounds(node2))) throw new ArgumentException("Node index is out of bounds.");
-            return adjacencyMatrix[node1][node2];
+            return adjacencyMatrix[(int)node1][(int)node2]; // conversions always succeed
         }
 
-        public override List<int> GetAdjacentNodes(int node)
+        public override List<BigInteger> GetAdjacentNodes(BigInteger node)
         {
-            List<int> adjNodes = new List<int>();
+            List<BigInteger> adjNodes = new List<BigInteger>();
             for (int i = 0; i < NodeCount; i++)
             {
                 if (i != node)

@@ -2,22 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 
 namespace InfiniteGraphTraversalAssignment
 {
-    abstract class Graph : IEnumerable<int>
+    abstract class Graph : IEnumerable<BigInteger>
     {
         internal int Version { get; set; } = 0;
-        public abstract int NodeCount { get; protected set; }
-        public abstract bool HasEdgeBetween(int node1, int node2);
-        public abstract List<int> GetAdjacentNodes(int node);
+        public abstract BigInteger NodeCount { get; protected set; }
+        public abstract bool HasEdgeBetween(BigInteger node1, BigInteger node2);
+        public abstract List<BigInteger> GetAdjacentNodes(BigInteger node);
 
         public GraphEnumerator GetTraversalEnumerator(TraversalStrategyEnum strategy)
         {
             return new GraphEnumerator(this, strategy);
         }
 
-        public IEnumerator<int> GetEnumerator()
+        public IEnumerator<BigInteger> GetEnumerator()
         {
             return new GraphEnumerator(this, TraversalStrategyEnum.BFS);
         }

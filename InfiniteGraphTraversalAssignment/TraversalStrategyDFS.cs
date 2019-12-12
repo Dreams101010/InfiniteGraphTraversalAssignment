@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 
 namespace InfiniteGraphTraversalAssignment
 {
     class TraversalStrategyDFS : TraversalStrategy
     {
-        List<int> visited = new List<int>();
-        List<int> allChildrenVisited = new List<int>();
-        Stack<int> stack = new Stack<int>();
+        List<BigInteger> visited = new List<BigInteger>();
+        List<BigInteger> allChildrenVisited = new List<BigInteger>();
+        Stack<BigInteger> stack = new Stack<BigInteger>();
 
         public override event AllChildrenVisitedHandler OnAllChildrenVisited;
         public override event HasNoChildrenHandler OnHasNoChildren;
@@ -21,9 +22,9 @@ namespace InfiniteGraphTraversalAssignment
             stack.Push(0);
         }
 
-        public bool HasChildren(int node)
+        public bool HasChildren(BigInteger node)
         {
-            List<int> adjacentNodes = graph.GetAdjacentNodes(node);
+            List<BigInteger> adjacentNodes = graph.GetAdjacentNodes(node);
             foreach (var i in adjacentNodes)
             {
                 if (!visited.Contains(i))
@@ -34,7 +35,7 @@ namespace InfiniteGraphTraversalAssignment
             return false;
         }
 
-        public override int Execute()
+        public override BigInteger Execute()
         {
             while (true)
             {
@@ -43,14 +44,14 @@ namespace InfiniteGraphTraversalAssignment
                     IsFinished = true;
                     return -1;
                 }
-                int node = stack.Pop();
+                BigInteger node = stack.Pop();
                 if (!visited.Contains(node)) // we haven't been here before
                 {
                     visited.Add(node); // mark as visited
                     if (HasChildren(node))
                     {
                         stack.Push(node);
-                        List<int> adjacentNodes = graph.GetAdjacentNodes(node);
+                        List<BigInteger> adjacentNodes = graph.GetAdjacentNodes(node);
                         foreach (var i in adjacentNodes) // push all children on stack
                         {
                             if (!visited.Contains(i))

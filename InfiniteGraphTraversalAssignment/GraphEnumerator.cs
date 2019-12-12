@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 
 namespace InfiniteGraphTraversalAssignment
 {
@@ -10,16 +11,16 @@ namespace InfiniteGraphTraversalAssignment
         BFS,
         DFS
     }
-    class GraphEnumerator : IEnumerator<int>
+    class GraphEnumerator : IEnumerator<BigInteger>
     {
         Graph graph = null;
         TraversalStrategy strategy = null;
         int version = 0;
 
-        public delegate void AllChildrenVisitedHandler(int nodeIndex);
+        public delegate void AllChildrenVisitedHandler(BigInteger nodeIndex);
         public event AllChildrenVisitedHandler OnAllChildrenVisited;
 
-        public delegate void HasNoChildrenHandler(int nodeIndex);
+        public delegate void HasNoChildrenHandler(BigInteger nodeIndex);
         public event HasNoChildrenHandler OnHasNoChildren;
 
         public GraphEnumerator(Graph g, TraversalStrategyEnum ts = TraversalStrategyEnum.BFS)
@@ -40,16 +41,16 @@ namespace InfiniteGraphTraversalAssignment
                     }
             }
             // if strategy's event fires, fire ours
-            strategy.OnAllChildrenVisited += delegate(int nodeIndex)
+            strategy.OnAllChildrenVisited += delegate(BigInteger nodeIndex)
             {
                 OnAllChildrenVisited?.Invoke(nodeIndex);
             };
-            strategy.OnHasNoChildren += delegate(int nodeIndex)
+            strategy.OnHasNoChildren += delegate(BigInteger nodeIndex)
             {
                 OnHasNoChildren?.Invoke(nodeIndex);
             };
         }
-        public int Current { get; private set; } = 0;
+        public BigInteger Current { get; private set; } = 0;
 
         object IEnumerator.Current => Current;
 

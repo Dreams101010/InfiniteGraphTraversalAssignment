@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 
 namespace InfiniteGraphTraversalAssignment
 {
@@ -8,8 +9,8 @@ namespace InfiniteGraphTraversalAssignment
     {
         // need to use a list instead of bool array
         // otherwise we wouldn't be able to allocate it for traversal
-        List<int> visited = new List<int>();
-        Queue<int> queue = new Queue<int>();
+        List<BigInteger> visited = new List<BigInteger>();
+        Queue<BigInteger> queue = new Queue<BigInteger>();
 
         public override event AllChildrenVisitedHandler OnAllChildrenVisited;
         public override event HasNoChildrenHandler OnHasNoChildren; 
@@ -22,15 +23,15 @@ namespace InfiniteGraphTraversalAssignment
             visited.Add(0);
         }
 
-        public override int Execute()
+        public override BigInteger Execute()
         {
             if (queue.Count == 0)
             {
                 IsFinished = true; // search ended, node has not been found
                 return -1;
             }
-            int node = queue.Dequeue();
-            List<int> adjacentNodes = graph.GetAdjacentNodes(node);
+            BigInteger node = queue.Dequeue();
+            List<BigInteger> adjacentNodes = graph.GetAdjacentNodes(node);
             bool allVisited = true;
             foreach (var i in adjacentNodes)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace InfiniteGraphTraversalAssignment
 {
@@ -6,27 +7,27 @@ namespace InfiniteGraphTraversalAssignment
     {
         static void Main(string[] args)
         {
-            //RadoGraph g = new RadoGraph();
-            AdjacencyMatrixGraph g = new AdjacencyMatrixGraph(6);
+            RadoGraph g = new RadoGraph();
+            /*AdjacencyMatrixGraph g = new AdjacencyMatrixGraph(6);
             g.SetEdge(0, 1);
             g.SetEdge(0, 4);
             g.SetEdge(1, 2);
             g.SetEdge(1, 3);
             g.SetEdge(3, 4);
-            g.SetEdge(3, 5);
+            g.SetEdge(3, 5);*/
             var trav = g.GetTraversalEnumerator(TraversalStrategyEnum.DFS);
-            trav.OnAllChildrenVisited += delegate(int node)
+            trav.OnAllChildrenVisited += delegate(BigInteger node)
             {
                 Console.WriteLine($"Node {node}'s children had been visited.");
             };
-            trav.OnHasNoChildren += delegate (int node)
+            trav.OnHasNoChildren += delegate (BigInteger node)
             {
                 Console.WriteLine($"Node {node} has no children.");
             };
             while (trav.MoveNext())
             {
                 Console.WriteLine(trav.Current);
-                Console.ReadKey();
+                //Console.ReadKey();
             }
         }
     }
